@@ -1,1 +1,0 @@
-Intra cluster filtering
