@@ -1,1 +1,1 @@
-#Intra cluster filtering
+Intra cluster filtering
