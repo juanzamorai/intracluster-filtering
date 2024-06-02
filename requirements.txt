@@ -1,4 +1,12 @@
-numpy
+numpy==1.23.5
 scikit-learn
 tensorflow
 keras
+protobuf>=3.20.3,<5.0.0
+gast
+astunparse
+flatbuffers>=23.5.26
+google-pasta>=0.1.1
+libclang>=13.0.0
+opt-einsum>=2.3.2
+ml-dtypes==0.3.1
