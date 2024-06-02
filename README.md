@@ -34,6 +34,6 @@ conda activate YourRepository
 pip install git+https://github.com/juanzamorai/intracluster-filtering.git
 ```
 
-Once the installation is complete, you can start using the library. We recommend checking out the examples in the `examples` folder.
+Once the installation is complete, you can start using the library. We recommend checking out the examples in the [`examples`](https://github.com/juanzamorai/intracluster-filtering/tree/main/examples) folder.
 
 
