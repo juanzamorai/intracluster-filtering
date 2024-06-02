@@ -6,7 +6,19 @@ We recommend creating an environment for the installation of the library.
 
 ### Step 1: Create a New Environment
 
-First, create a new environment
+First, create a new environment:
+
+```sh
+# Create a new environment
+python -m venv YourRepository
+
+# Activate the environment
+# On Windows
+.\YourRepository\Scripts\activate
+
+# On macOS/Linux
+source YourRepository/bin/activate
+```
 
 ### Step 2: Install Git
 
