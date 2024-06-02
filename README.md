@@ -18,7 +18,7 @@ python -m venv YourRepository
 
 # On macOS/Linux
 source YourRepository/bin/activate
-
+```sh
 ### Step 2: Install Git
 
 It is necessary to have Git installed for this installation. If you don't have Git installed, you can download it from [here](https://git-scm.com/downloads).
