@@ -1,6 +1,6 @@
-numpy==1.23.5
+numpy==1.25.2
 scikit-learn
-tensorflow
+tensorflow==2.15.0
 keras
 protobuf>=3.20.3,<5.0.0
 gast
