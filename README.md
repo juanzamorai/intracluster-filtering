@@ -6,7 +6,7 @@ It is necessary to use Python version 3.10.14 for the installation and proper fu
 
 ### Step 1: Create a New Environment
 
-First, create a new environment with Python version 3.10.9.
+First, create a new environment with Python version 3.10.14.
 
 ### Step 2: Install Git
 
