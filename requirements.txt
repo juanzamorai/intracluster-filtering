@@ -2,7 +2,7 @@ numpy==1.25.2
 scikit-learn
 tensorflow==2.10.0
 keras==2.10.0
-protobuf>=3.20.3,<5.0.0
+protobuf>=3.9.2,<3.20
 gast
 astunparse
 flatbuffers>=23.5.26
