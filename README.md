@@ -2,11 +2,11 @@
 
 ## Installation Instructions
 
-We recommend creating an environment with Python version 3.10.9 for the installation of the library.
+It is necessary to use Python version 3.10.9 for the installation and proper functioning of the library.
 
 ### Step 1: Create a New Environment
 
-First, create a new environment
+First, create a new environment with Python version 3.10.9.
 
 ### Step 2: Install Git
 
