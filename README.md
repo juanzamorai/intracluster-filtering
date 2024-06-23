@@ -2,7 +2,7 @@
 
 ## Installation Instructions
 
-We recommend creating an environment for the installation of the library.
+We recommend creating an environment with Python version 3.10.9 for the installation of the library.
 
 ### Step 1: Create a New Environment
 
