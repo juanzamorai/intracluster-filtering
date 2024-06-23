@@ -2,7 +2,7 @@
 
 ## Installation Instructions
 
-It is necessary to use Python version 3.10.9 for the installation and proper functioning of the library.
+It is necessary to use Python version 3.10.14 for the installation and proper functioning of the library.
 
 ### Step 1: Create a New Environment
 
