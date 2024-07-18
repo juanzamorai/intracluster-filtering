@@ -2,9 +2,7 @@
 
 ## Installation Instructions
 
-It is necessary to use Python <div style="background-color: yellow; padding: 5px; border-radius: 5px; display: inline-block;">
-  <strong>Versión 3.10.14</strong>
-</div> for the installation and proper functioning of the library.
+It is necessary to use Python **Versión 3.10.14** for the installation and proper functioning of the library.
 
 ### Step 1: Create a New Environment
 
