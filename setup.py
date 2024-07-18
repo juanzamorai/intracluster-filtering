@@ -24,6 +24,6 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url='https://github.com/juanzamorai/intracluster-filtering',
     license='MIT',
-    packages=['intracluster.filtering', 'utils'],
+    packages=['intracluster-filtering', 'utils'],
     install_requires=get_install_requires(),
 )
