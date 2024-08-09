@@ -55,7 +55,6 @@ class DataSelector:
         if self.check_filter_update_criteria(epoch):
             inspector_layer_out = model.inspector_out(self.X_tr).numpy()
             inspector_layer_out, n_components = self.apply_pca(inspector_layer_out, explained_variance, n_components)
-            print(f"PCA done with {n_components} components")
 
             gmm = GMM(n_components=self.y_tr.shape[1], random_state=self.random_state).fit(inspector_layer_out)
             clusterized_outs_proba = gmm.predict_proba(inspector_layer_out)
