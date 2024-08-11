@@ -21,6 +21,7 @@ class DataSelector:
         self.all_removed_indices = []  # List to store all removed indexes
         self.previous_X_tr = X_tr  # Save a copy of the original data
         self.previous_y_tr = y_tr  # Save a copy of the original labels
+        self.inspector_layer_out = [] # for clusterized data
         
     def check_filter_update_criteria(self, epoch):
         return (epoch >= self.epochs_to_start_filter and 
@@ -69,7 +70,7 @@ class DataSelector:
                 #percentage_of_pertenence[class_it] = most_common[0][1] / mask.sum()
                 if not mask.any():
                     print(f"Warning: no data for class {class_it}, filtering will not be done")
-                    return self.previous_X_tr, self.previous_y_tr, self.original_indices, self.all_removed_indices
+                    return self.previous_X_tr, self.previous_y_tr, self.original_indices, self.all_removed_indices, self.inspector_layer_out
                 most_common = Counter(clusterized_outs[mask]).most_common(1)
                 
                 if most_common:  # Check if most_common is not empty
@@ -78,7 +79,7 @@ class DataSelector:
                 else:
                     # Handle the case where there is no most common element
                     print(f"Warning: no common elements found for class {class_it}")
-                    return self.previous_X_tr, self.previous_y_tr, self.original_indices, self.all_removed_indices
+                    return self.previous_X_tr, self.previous_y_tr, self.original_indices, self.all_removed_indices, self.inspector_layer_out
             
             
             size_set_train = self.X_tr.shape[0]
@@ -87,7 +88,7 @@ class DataSelector:
             if set(class_gmm_to_real_class.values()) != set(outs_posibilities):
                 print("Warning: there are classes without a cluster associated")
                 print("Warning: the filtering was not done")
-                return self.previous_X_tr, self.previous_y_tr, self.original_indices, self.all_removed_indices
+                return self.previous_X_tr, self.previous_y_tr, self.original_indices, self.all_removed_indices, self.inspector_layer_out
 
             print("All classes have just one cluster associated")
 
@@ -125,7 +126,7 @@ class DataSelector:
             # Check if no outliers have been identified
             if len(self.filtered_index) == 0:
                 print("No outliers identified, using previous filtered dataset")
-                return self.previous_X_tr, self.previous_y_tr, self.original_indices, self.all_removed_indices
+                return self.previous_X_tr, self.previous_y_tr, self.original_indices, self.all_removed_indices, self.inspector_layer_out
             
             # Update training data with filtered data
             filtered_X_tr = tf.gather(self.X_tr, self.filtered_index)
@@ -148,7 +149,7 @@ class DataSelector:
                 # Check if the number of data removed is zero
                 if num_removed == 0:
                     print("No data to remove for outliers, using previous filtered dataset")
-                    return self.previous_X_tr, self.previous_y_tr, self.original_indices, self.all_removed_indices
+                    return self.previous_X_tr, self.previous_y_tr, self.original_indices, self.all_removed_indices, self.inspector_layer_out
 
                 # Select an equal number of indexes at random, excluding those already removed
                 all_indices = set(range(len(self.X_tr)))
@@ -174,8 +175,11 @@ class DataSelector:
             # Save the current filtered data set
             self.previous_X_tr = self.X_tr
             self.previous_y_tr = self.y_tr
+            
+            #Get inspector_data
+            self.inspector_layer_out = inspector_layer_out
 
         return self.return_filtered_data()
     
     def return_filtered_data(self):
-        return self.X_tr, self.y_tr, self.original_indices, self.all_removed_indices
+        return self.X_tr, self.y_tr, self.original_indices, self.all_removed_indices, self.inspector_layer_out
