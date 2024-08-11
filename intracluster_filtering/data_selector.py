@@ -100,9 +100,13 @@ class DataSelector:
                 class_mask = self.y_tr.argmax(axis=1) == class_it
                 class_probs = np.round(prob_correct_class_cluster[class_mask], 2)  # Round to 2 decimals
                 threshold = np.percentile(class_probs, self.filter_percentile * 100)
-                threshold = round(threshold, 2)  # Round to 2 decimals
+                if self.train_with_outliers:
+                	threshold = round(threshold, 2)
+                else:
+                	threshold = round(min(threshold, 1/self.out_clases_number), 2)  # Round to 2 decimals
 
                 # Find the probabilities less than the threshold and their indices
+                # If probability is less than prob corresponding to uniform distribution among all classes
                 filtered_probs_below_threshold = class_probs[class_probs < threshold]
                 
                 # Print the results
@@ -144,7 +148,7 @@ class DataSelector:
                 removed_labels = tf.gather(self.y_tr, np.array(removed_data_indices, dtype=int))
                 removed_indices = tf.gather(self.original_indices, np.array(removed_data_indices, dtype=int))
                 
-                num_removed = len(removed_data_indices)
+                num_removed = 3*len(removed_data_indices)
                 
                 # Check if the number of data removed is zero
                 if num_removed == 0:
