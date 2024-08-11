@@ -63,23 +63,42 @@ class DataSelector:
 
             class_gmm_to_real_class = {}
             percentage_of_pertenence = {}
+            
             for class_it in outs_posibilities:
                 mask = self.y_tr.argmax(axis=1) == class_it
-                #most_common = Counter(clusterized_outs[mask]).most_common(1)
-                #class_gmm_to_real_class[most_common[0][0]] = class_it
-                #percentage_of_pertenence[class_it] = most_common[0][1] / mask.sum()
-                if not mask.any():
-                    print(f"Warning: no data for class {class_it}, filtering will not be done")
-                    return self.previous_X_tr, self.previous_y_tr, self.original_indices, self.all_removed_indices, self.inspector_layer_out
-                most_common = Counter(clusterized_outs[mask]).most_common(1)
+                cluster_counts = Counter(clusterized_outs[mask])
+
+                for cluster, current_count in cluster_counts.most_common():
+                    current_percentage = current_count / mask.sum()
+
+                    if cluster in class_gmm_to_real_class: # if label was already assigned
+                        prev_class = class_gmm_to_real_class[cluster]
+                        if current_percentage > percentage_of_pertenence[prev_class]:
+                            # Update label
+                            print("AA")
+                            class_gmm_to_real_class[cluster] = class_it
+                            percentage_of_pertenence[class_it] = current_percentage
+                            # Label for prev_class needs to be done ag
+                            outs_posibilities.append(prev_class)
+                            break
+                    else:
+                        class_gmm_to_real_class[cluster] = class_it
+                        percentage_of_pertenence[class_it] = current_percentage
+                        break
+
+
+                # if not mask.any():
+                #     print(f"Warning: no data for class {class_it}, filtering will not be done")
+                #     return self.previous_X_tr, self.previous_y_tr, self.original_indices, self.all_removed_indices, self.inspector_layer_out
+                # most_common = Counter(clusterized_outs[mask]).most_common(1)
                 
-                if most_common:  # Check if most_common is not empty
-                    class_gmm_to_real_class[most_common[0][0]] = class_it
-                    percentage_of_pertenence[class_it] = most_common[0][1] / mask.sum()
-                else:
-                    # Handle the case where there is no most common element
-                    print(f"Warning: no common elements found for class {class_it}")
-                    return self.previous_X_tr, self.previous_y_tr, self.original_indices, self.all_removed_indices, self.inspector_layer_out
+                # if most_common:  # Check if most_common is not empty
+                #     class_gmm_to_real_class[most_common[0][0]] = class_it
+                #     percentage_of_pertenence[class_it] = most_common[0][1] / mask.sum()
+                # else:
+                #     # Handle the case where there is no most common element
+                #     print(f"Warning: no common elements found for class {class_it}")
+                #     return self.previous_X_tr, self.previous_y_tr, self.original_indices, self.all_removed_indices, self.inspector_layer_out
             
             
             size_set_train = self.X_tr.shape[0]
@@ -92,7 +111,10 @@ class DataSelector:
 
             print("All classes have just one cluster associated")
 
-            clusterized_outs_proba = clusterized_outs_proba[:, list(class_gmm_to_real_class.keys())]
+            sorted_keys = [k for k, v in sorted(class_gmm_to_real_class.items(), key=lambda item: item[1])]
+            clusterized_outs_proba = clusterized_outs_proba[:, sorted_keys]
+
+            #clusterized_outs_proba = clusterized_outs_proba[:, list(class_gmm_to_real_class.keys())]
             prob_correct_class_cluster = clusterized_outs_proba[np.arange(len(clusterized_outs_proba)), self.y_tr.argmax(axis=1)]
             
             filtered_indices_per_class = []
