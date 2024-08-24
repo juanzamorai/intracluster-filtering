@@ -75,7 +75,6 @@ class DataSelector:
                         prev_class = class_gmm_to_real_class[cluster]
                         if current_percentage > percentage_of_pertenence[prev_class]:
                             # Update label
-                            print("AA")
                             class_gmm_to_real_class[cluster] = class_it
                             percentage_of_pertenence[class_it] = current_percentage
                             # Label for prev_class needs to be done ag
@@ -86,20 +85,6 @@ class DataSelector:
                         percentage_of_pertenence[class_it] = current_percentage
                         break
 
-
-                # if not mask.any():
-                #     print(f"Warning: no data for class {class_it}, filtering will not be done")
-                #     return self.previous_X_tr, self.previous_y_tr, self.original_indices, self.all_removed_indices, self.inspector_layer_out
-                # most_common = Counter(clusterized_outs[mask]).most_common(1)
-                
-                # if most_common:  # Check if most_common is not empty
-                #     class_gmm_to_real_class[most_common[0][0]] = class_it
-                #     percentage_of_pertenence[class_it] = most_common[0][1] / mask.sum()
-                # else:
-                #     # Handle the case where there is no most common element
-                #     print(f"Warning: no common elements found for class {class_it}")
-                #     return self.previous_X_tr, self.previous_y_tr, self.original_indices, self.all_removed_indices, self.inspector_layer_out
-            
             
             size_set_train = self.X_tr.shape[0]
             print(f"Size of the training set: {size_set_train}")
@@ -114,7 +99,6 @@ class DataSelector:
             sorted_keys = [k for k, v in sorted(class_gmm_to_real_class.items(), key=lambda item: item[1])]
             clusterized_outs_proba = clusterized_outs_proba[:, sorted_keys]
 
-            #clusterized_outs_proba = clusterized_outs_proba[:, list(class_gmm_to_real_class.keys())]
             prob_correct_class_cluster = clusterized_outs_proba[np.arange(len(clusterized_outs_proba)), self.y_tr.argmax(axis=1)]
             
             filtered_indices_per_class = []
