@@ -21,6 +21,7 @@ class DataSelector:
         self.all_removed_indices = []  # List to store all removed indexes
         self.previous_X_tr = X_tr  # Save a copy of the original data
         self.previous_y_tr = y_tr  # Save a copy of the original labels
+        self.inspector_layer_out = [] # for clusterized data
         
     def check_filter_update_criteria(self, epoch):
         return (epoch >= self.epochs_to_start_filter and 
@@ -55,7 +56,6 @@ class DataSelector:
         if self.check_filter_update_criteria(epoch):
             inspector_layer_out = model.inspector_out(self.X_tr).numpy()
             inspector_layer_out, n_components = self.apply_pca(inspector_layer_out, explained_variance, n_components)
-            print(f"PCA done with {n_components} components")
 
             gmm = GMM(n_components=self.y_tr.shape[1], random_state=self.random_state).fit(inspector_layer_out)
             clusterized_outs_proba = gmm.predict_proba(inspector_layer_out)
@@ -63,23 +63,42 @@ class DataSelector:
 
             class_gmm_to_real_class = {}
             percentage_of_pertenence = {}
+            
             for class_it in outs_posibilities:
                 mask = self.y_tr.argmax(axis=1) == class_it
-                #most_common = Counter(clusterized_outs[mask]).most_common(1)
-                #class_gmm_to_real_class[most_common[0][0]] = class_it
-                #percentage_of_pertenence[class_it] = most_common[0][1] / mask.sum()
-                if not mask.any():
-                    print(f"Warning: no data for class {class_it}, filtering will not be done")
-                    return self.previous_X_tr, self.previous_y_tr, self.original_indices, self.all_removed_indices
-                most_common = Counter(clusterized_outs[mask]).most_common(1)
+                cluster_counts = Counter(clusterized_outs[mask])
+
+                for cluster, current_count in cluster_counts.most_common():
+                    current_percentage = current_count / mask.sum()
+
+                    if cluster in class_gmm_to_real_class: # if label was already assigned
+                        prev_class = class_gmm_to_real_class[cluster]
+                        if current_percentage > percentage_of_pertenence[prev_class]:
+                            # Update label
+                            print("AA")
+                            class_gmm_to_real_class[cluster] = class_it
+                            percentage_of_pertenence[class_it] = current_percentage
+                            # Label for prev_class needs to be done ag
+                            outs_posibilities.append(prev_class)
+                            break
+                    else:
+                        class_gmm_to_real_class[cluster] = class_it
+                        percentage_of_pertenence[class_it] = current_percentage
+                        break
+
+
+                # if not mask.any():
+                #     print(f"Warning: no data for class {class_it}, filtering will not be done")
+                #     return self.previous_X_tr, self.previous_y_tr, self.original_indices, self.all_removed_indices, self.inspector_layer_out
+                # most_common = Counter(clusterized_outs[mask]).most_common(1)
                 
-                if most_common:  # Check if most_common is not empty
-                    class_gmm_to_real_class[most_common[0][0]] = class_it
-                    percentage_of_pertenence[class_it] = most_common[0][1] / mask.sum()
-                else:
-                    # Handle the case where there is no most common element
-                    print(f"Warning: no common elements found for class {class_it}")
-                    return self.previous_X_tr, self.previous_y_tr, self.original_indices, self.all_removed_indices
+                # if most_common:  # Check if most_common is not empty
+                #     class_gmm_to_real_class[most_common[0][0]] = class_it
+                #     percentage_of_pertenence[class_it] = most_common[0][1] / mask.sum()
+                # else:
+                #     # Handle the case where there is no most common element
+                #     print(f"Warning: no common elements found for class {class_it}")
+                #     return self.previous_X_tr, self.previous_y_tr, self.original_indices, self.all_removed_indices, self.inspector_layer_out
             
             
             size_set_train = self.X_tr.shape[0]
@@ -88,11 +107,14 @@ class DataSelector:
             if set(class_gmm_to_real_class.values()) != set(outs_posibilities):
                 print("Warning: there are classes without a cluster associated")
                 print("Warning: the filtering was not done")
-                return self.previous_X_tr, self.previous_y_tr, self.original_indices, self.all_removed_indices
+                return self.previous_X_tr, self.previous_y_tr, self.original_indices, self.all_removed_indices, self.inspector_layer_out
 
             print("All classes have just one cluster associated")
 
-            clusterized_outs_proba = clusterized_outs_proba[:, list(class_gmm_to_real_class.keys())]
+            sorted_keys = [k for k, v in sorted(class_gmm_to_real_class.items(), key=lambda item: item[1])]
+            clusterized_outs_proba = clusterized_outs_proba[:, sorted_keys]
+
+            #clusterized_outs_proba = clusterized_outs_proba[:, list(class_gmm_to_real_class.keys())]
             prob_correct_class_cluster = clusterized_outs_proba[np.arange(len(clusterized_outs_proba)), self.y_tr.argmax(axis=1)]
             
             filtered_indices_per_class = []
@@ -100,9 +122,13 @@ class DataSelector:
                 class_mask = self.y_tr.argmax(axis=1) == class_it
                 class_probs = np.round(prob_correct_class_cluster[class_mask], 2)  # Round to 2 decimals
                 threshold = np.percentile(class_probs, self.filter_percentile * 100)
-                threshold = round(threshold, 2)  # Round to 2 decimals
+                if self.train_with_outliers:
+                	threshold = round(threshold, 2)
+                else:
+                	threshold = round(min(threshold, 1/self.out_clases_number), 2)  # Round to 2 decimals
 
                 # Find the probabilities less than the threshold and their indices
+                # If probability is less than prob corresponding to uniform distribution among all classes
                 filtered_probs_below_threshold = class_probs[class_probs < threshold]
                 
                 # Print the results
@@ -126,7 +152,7 @@ class DataSelector:
             # Check if no outliers have been identified
             if len(self.filtered_index) == 0:
                 print("No outliers identified, using previous filtered dataset")
-                return self.previous_X_tr, self.previous_y_tr, self.original_indices, self.all_removed_indices
+                return self.previous_X_tr, self.previous_y_tr, self.original_indices, self.all_removed_indices, self.inspector_layer_out
             
             # Update training data with filtered data
             filtered_X_tr = tf.gather(self.X_tr, self.filtered_index)
@@ -144,12 +170,12 @@ class DataSelector:
                 removed_labels = tf.gather(self.y_tr, np.array(removed_data_indices, dtype=int))
                 removed_indices = tf.gather(self.original_indices, np.array(removed_data_indices, dtype=int))
                 
-                num_removed = len(removed_data_indices)
+                num_removed = 3*len(removed_data_indices)
                 
                 # Check if the number of data removed is zero
                 if num_removed == 0:
                     print("No data to remove for outliers, using previous filtered dataset")
-                    return self.previous_X_tr, self.previous_y_tr, self.original_indices, self.all_removed_indices
+                    return self.previous_X_tr, self.previous_y_tr, self.original_indices, self.all_removed_indices, self.inspector_layer_out
 
                 # Select an equal number of indexes at random, excluding those already removed
                 all_indices = set(range(len(self.X_tr)))
@@ -175,8 +201,11 @@ class DataSelector:
             # Save the current filtered data set
             self.previous_X_tr = self.X_tr
             self.previous_y_tr = self.y_tr
+            
+            #Get inspector_data
+            self.inspector_layer_out = inspector_layer_out
 
         return self.return_filtered_data()
     
     def return_filtered_data(self):
-        return self.X_tr, self.y_tr, self.original_indices, self.all_removed_indices
+        return self.X_tr, self.y_tr, self.original_indices, self.all_removed_indices, self.inspector_layer_out

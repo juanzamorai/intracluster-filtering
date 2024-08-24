@@ -17,9 +17,9 @@ def get_install_requires() -> List[str]:
 setuptools.setup(
     name='intraclusterfiltering',
     version='0.0.1',
-    author='Sebastian Jara, Juan Zamora, Pascal',
+    author='Sebastian Jara, Juan Zamora, Pascal Sigel, Kerlyns Martínez',
     author_email='',
-    description='Intra clustering outliers detector',
+    description='Detection Intra-class Outliers with Neural Networks (DIONN) algorithm',
     long_description=long_description,
     long_description_content_type="text/markdown",
     url='https://github.com/juanzamorai/intracluster-filtering',
