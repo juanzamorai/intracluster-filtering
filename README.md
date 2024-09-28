@@ -1,10 +1,8 @@
 <header>
     <img src="./images/DIONN.png"  alt="DIONN"/>
 </header>
-</br></br></br></br></br>
+</br>
 
-</br>
-</br>
 
 # DIONN - Intra Cluster Filtering
 
