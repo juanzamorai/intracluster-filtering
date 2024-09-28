@@ -1,6 +1,7 @@
 <header>
-<img src="./images/DIONN.png" width=200 alt="DIONN" align="left"/>
-<img src="https://upload.wikimedia.org/wikipedia/commons/4/46/Logo_universidad_de_valparaiso_2008.svg" alt="UV" align="right"/>
+<p align="center">
+    <img src="./images/DIONN.png" width="200" alt="DIONN"/>
+</p>
 </header>
 </br></br></br></br></br>
 
