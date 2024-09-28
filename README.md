@@ -1,7 +1,5 @@
 <header>
-<p align="center">
-    <img src="./images/DIONN.png" width="200" alt="DIONN"/>
-</p>
+    <img src="./images/DIONN.png"  alt="DIONN"/>
 </header>
 </br></br></br></br></br>
 
