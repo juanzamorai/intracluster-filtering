@@ -1,7 +1,6 @@
 <header>
     <img src="./images/DIONN.png"  alt="DIONN"/>
 </header>
-</br>
 
 
 # DIONN - Intra Cluster Filtering
@@ -19,7 +18,7 @@
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer augue metus, venenatis eu nunc semper, fermentum lobortis libero. Vivamus ultrices nisi ac elit imperdiet porttitor. Aenean nulla dui, aliquam at tellus sit amet, vehicula imperdiet tortor. Praesent porttitor non libero vitae dapibus. Nulla vulputate condimentum pretium. Sed euismod suscipit lorem ac scelerisque. Morbi lobortis magna eget pretium pellentesque. Nulla euismod condimentum magna. Nam ultricies, velit eget convallis facilisis, diam sapien elementum odio, ac auctor massa nisi id odio. Cras nec convallis tellus. Pellentesque congue eros eget leo tincidunt vestibulum. Sed ligula nisl, efficitur bibendum justo sed, ornare ullamcorper elit. Nulla condimentum felis eu mollis facilisis. Morbi luctus turpis lectus, a consectetur turpis lacinia at.
 
-
+</br>
 ## Installation Instructions
 
 It is necessary to use Python **Versión 3.10.14** for the installation and proper functioning of the library.
@@ -44,7 +43,7 @@ pip install git+https://github.com/juanzamorai/intracluster-filtering.git
 ```
 
 Once the installation is complete, you can start using the library.
-
+</br>
 ## Usage
 
 Example. 
