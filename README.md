@@ -10,11 +10,7 @@
 ![Python](https://img.shields.io/badge/python-3.10.14-blue)
 ![Versión de PyPI](https://img.shields.io/pypi/v/intraclusterfiltering)
 ![Descargas Totales](https://img.shields.io/pypi/dm/intraclusterfiltering)
-
 <!-- badges: end -->
-
-
-
 ## Overview
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer augue metus, venenatis eu nunc semper, fermentum lobortis libero. Vivamus ultrices nisi ac elit imperdiet porttitor. Aenean nulla dui, aliquam at tellus sit amet, vehicula imperdiet tortor. Praesent porttitor non libero vitae dapibus. Nulla vulputate condimentum pretium. Sed euismod suscipit lorem ac scelerisque. Morbi lobortis magna eget pretium pellentesque. Nulla euismod condimentum magna. Nam ultricies, velit eget convallis facilisis, diam sapien elementum odio, ac auctor massa nisi id odio. Cras nec convallis tellus. Pellentesque congue eros eget leo tincidunt vestibulum. Sed ligula nisl, efficitur bibendum justo sed, ornare ullamcorper elit. Nulla condimentum felis eu mollis facilisis. Morbi luctus turpis lectus, a consectetur turpis lacinia at.
