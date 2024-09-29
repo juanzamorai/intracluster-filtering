@@ -8,7 +8,8 @@
 <!-- badges: start -->
 
 ![Python](https://img.shields.io/badge/python-3.10.14-blue)
-![Descargas](https://img.shields.io/pypi/dm/intraclusterfiltering)
+![Versión de PyPI](https://img.shields.io/pypi/v/intraclusterfiltering)
+![Descargas Totales](https://img.shields.io/pypi/dm/intraclusterfiltering)
 
 <!-- badges: end -->
 
