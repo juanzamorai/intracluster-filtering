@@ -42,5 +42,5 @@ pip install git+https://github.com/juanzamorai/intracluster-filtering.git
 Once the installation is complete, you can start using the library.
 </br>
 ## Usage
-See see [`Examples`](https://github.com/juanzamorai/intracluster-filtering/tree/main/examples) In this folder, you can find three use cases of the library applied to classic datasets like Iris, Diabetes, and MNIST, showcasing its functionality across diverse data types.
+See [`Examples`](https://github.com/juanzamorai/intracluster-filtering/tree/main/examples) In this folder, you can find three use cases of the library applied to classic datasets like Iris, Diabetes, and MNIST, showcasing its functionality across diverse data types.
 
