@@ -13,7 +13,7 @@
 <!-- badges: end -->
 ## Overview
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer augue metus, venenatis eu nunc semper, fermentum lobortis libero. Vivamus ultrices nisi ac elit imperdiet porttitor. Aenean nulla dui, aliquam at tellus sit amet, vehicula imperdiet tortor. Praesent porttitor non libero vitae dapibus. Nulla vulputate condimentum pretium. Sed euismod suscipit lorem ac scelerisque. Morbi lobortis magna eget pretium pellentesque. Nulla euismod condimentum magna. Nam ultricies, velit eget convallis facilisis, diam sapien elementum odio, ac auctor massa nisi id odio. Cras nec convallis tellus. Pellentesque congue eros eget leo tincidunt vestibulum. Sed ligula nisl, efficitur bibendum justo sed, ornare ullamcorper elit. Nulla condimentum felis eu mollis facilisis. Morbi luctus turpis lectus, a consectetur turpis lacinia at.
+DIONN (Detection of Intra-Class Outliers with Neural Networks) is an innovative Python library designed to identify and systematically filter intra-class outliers during the training of neural networks. This library aims to improve the generalization and robustness of neural models across various data types, including images, time-series, and high-dimensional datasets. The approach integrates statistical techniques like Gaussian Mixture Models (GMM) and Principal Component Analysis (PCA) with unsupervised learning to detect data points that deviate significantly from their respective class patterns.
 </br>
 
 ## Installation Instructions
@@ -42,8 +42,5 @@ pip install git+https://github.com/juanzamorai/intracluster-filtering.git
 Once the installation is complete, you can start using the library.
 </br>
 ## Usage
+See see [`Examples`](https://github.com/juanzamorai/intracluster-filtering/tree/main/examples) In this folder, you can find three use cases of the library applied to classic datasets like Iris, Diabetes, and MNIST, showcasing its functionality across diverse data types.
 
-Example. 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer augue metus, venenatis eu nunc semper, fermentum lobortis libero. Vivamus ultrices nisi ac elit imperdiet porttitor. Aenean nulla dui, aliquam at tellus sit amet, vehicula imperdiet tortor. Praesent porttitor non libero vitae dapibus. Nulla vulputate condimentum pretium. Sed euismod suscipit lorem ac scelerisque. Morbi lobortis magna eget pretium pellentesque. Nulla euismod condimentum magna. Nam ultricies, velit eget convallis facilisis, diam sapien elementum odio, ac auctor massa nisi id odio. Cras nec convallis tellus. Pellentesque congue eros eget leo tincidunt vestibulum. Sed ligula nisl, efficitur bibendum justo sed, ornare ullamcorper elit. Nulla condimentum felis eu mollis facilisis. Morbi luctus turpis lectus, a consectetur turpis lacinia at.
-
-[`examples`](https://github.com/juanzamorai/intracluster-filtering/tree/main/examples)
