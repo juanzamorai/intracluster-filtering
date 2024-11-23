@@ -16,7 +16,7 @@ def get_install_requires() -> List[str]:
 
 setuptools.setup(
     name='dionn',
-    version='1.1.0',
+    version='1.2.0',
     author='Sebastian Jara, Juan Zamora, Pascal Sigel, Kerlyns Martínez, Daira Velandia, Sebastián Vegas',
     author_email='',
     description='Detection Intra-class Outliers with Neural Networks (DIONN) algorithm',
