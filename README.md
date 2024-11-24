@@ -36,7 +36,7 @@ In your console (e.g., Anaconda Prompt), execute the following commands:
 conda activate YourRepository
 
 # Install the package from GitHub
-pip install git+https://github.com/juanzamorai/intracluster-filtering.git
+pip install DIONN
 ```
 
 Once the installation is complete, you can start using the library.
