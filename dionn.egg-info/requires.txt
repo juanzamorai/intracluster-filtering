@@ -1,0 +1,15 @@
+numpy==1.25.2
+scikit-learn
+tensorflow==2.10.0
+keras==2.10.0
+protobuf<3.20,>=3.9.2
+gast
+astunparse
+flatbuffers>=23.5.26
+google-pasta>=0.1.1
+libclang>=13.0.0
+opt-einsum>=2.3.2
+plotly
+ml-dtypes==0.3.1
+seaborn
+scipy==1.14.1
