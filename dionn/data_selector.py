@@ -193,7 +193,8 @@ class DataSelector:
             # Mapeo de clusters a clases reales
             class_cluster_to_real = {}
             percentage_of_pertenence = {}
-            for class_it in outs_posibilities:
+            original_classes = list(outs_posibilities)
+            for class_it in original_classes:
                 mask = self.y_tr.argmax(axis=1) == class_it
                 cluster_counts = Counter(clusterized_outs[mask])
                 for cluster, current_count in cluster_counts.most_common():
@@ -204,17 +205,16 @@ class DataSelector:
                             # Actualiza el mapeo
                             class_cluster_to_real[cluster] = class_it
                             percentage_of_pertenence[class_it] = current_percentage
-                            outs_posibilities.append(prev_class)
-                            break
+                            
                     else:
                         class_cluster_to_real[cluster] = class_it
                         percentage_of_pertenence[class_it] = current_percentage
-                        break
+                    break
 
             size_set_train = self.X_tr.shape[0]
             print(f"Tamaño del set de entrenamiento: {size_set_train}")
 
-            if set(class_cluster_to_real.values()) != set(outs_posibilities):
+            if set(class_cluster_to_real.values()) != set(original_classes):
                 print("Warning: existen clases sin un cluster asociado")
                 print("Warning: no se realizó el filtrado")
                 return self.previous_X_tr, self.previous_y_tr, self.original_indices, self.all_removed_indices, self.inspector_layer_out
@@ -226,7 +226,7 @@ class DataSelector:
 
             # Filtrado por clases según umbral
             filtered_indices_per_class = []
-            for class_it in outs_posibilities:
+            for class_it in original_classes:
                 class_mask = self.y_tr.argmax(axis=1) == class_it
                 class_probs = np.round(prob_correct_class_cluster[class_mask], 2)
                 threshold = np.percentile(class_probs, self.filter_percentile * 100)
