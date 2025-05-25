@@ -9,7 +9,7 @@
 
 ![Python](https://img.shields.io/badge/python-3.10.14-blue)
 ![Versión de PyPI](https://img.shields.io/pypi/v/dionn)
-![Descargas Totales](https://img.shields.io/pypi/dt/dionn.svg)
+![Descargas Totales](https://img.shields.io/pypi/dm/dionn)
 <!-- badges: end -->
 ## Overview
 
